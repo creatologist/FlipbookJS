@@ -38,7 +38,7 @@ var Flipbook = function( slides ) {
 
 Flipbook.prototype = {
 	
-	flipTo : function( slideNum, duration, animationParams ) {
+	flipTo : function( slideNum, duration, animationParams, finishCallback ) {
 		
 		if ( slideNum < this.atSlide ) slideNum -= 1;
 		
@@ -62,6 +62,7 @@ Flipbook.prototype = {
 		var delay = 0;
 		
 		var self = this;
+		var last = false;
 		
 		for ( var i = 0, len = totalSlides; i < len; i++ ) {
 			var n = i;
@@ -69,10 +70,23 @@ Flipbook.prototype = {
 			
 			n = this.atSlide + n;
 			
-			$( this.slides[n] ).delay( delay + ( pause * i ) ).animate( animationParams, dTime, function() {
-				if ( forward ) self.atSlide = Number( $( this ).attr( 'flipbookSlide' ) ) + 1;
-				else self.atSlide = Number( $( this ).attr( 'flipbookSlide' ) );
-			} );
+			if ( forward && i == len - 1 ) last = true;
+			else if ( !forward && n == slideNum + 1 ) last = true;
+			
+			if ( last ) {
+				$( this.slides[n] ).delay( delay + ( pause * i ) ).animate( animationParams, dTime, function() {
+					if ( forward ) self.atSlide = Number( $( this ).attr( 'flipbookSlide' ) ) + 1;
+					else self.atSlide = Number( $( this ).attr( 'flipbookSlide' ) );
+					
+					if ( finishCallback ) finishCallback();
+				} );
+			} else {
+				$( this.slides[n] ).delay( delay + ( pause * i ) ).animate( animationParams, dTime, function() {
+					if ( forward ) self.atSlide = Number( $( this ).attr( 'flipbookSlide' ) ) + 1;
+					else self.atSlide = Number( $( this ).attr( 'flipbookSlide' ) );
+				} );
+			}
+			
 			
 			delay += dTime;
 		}
