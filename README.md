@@ -7,7 +7,7 @@ Flip through slides by animating each slide leading to your target slide.
 ### Example Code
 ```javascript
 	
-	// requres jQuery
+	// requires jQuery
 	var flipbook = new Flipbook( $( '#container .slide' ) );
 	
 	/*
