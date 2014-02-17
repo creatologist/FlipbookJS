@@ -38,7 +38,7 @@ var Flipbook = function( slides ) {
 
 Flipbook.prototype = {
 	
-	flipTo : function( slideNum, time, animationParams ) {
+	flipTo : function( slideNum, duration, animationParams ) {
 		
 		if ( slideNum < this.atSlide ) slideNum -= 1;
 		
@@ -49,7 +49,16 @@ Flipbook.prototype = {
 		
 		totalSlides = Math.abs( totalSlides );
 		
-		var dTime = time / totalSlides;
+		var t,
+			pause = 0;
+			
+		if ( typeof duration == 'number' ) t = duration;
+		else {
+			t = duration.duration;
+			pause = duration.pause;
+		}
+		
+		var dTime = t / totalSlides;
 		var delay = 0;
 		
 		var self = this;
@@ -60,7 +69,7 @@ Flipbook.prototype = {
 			
 			n = this.atSlide + n;
 			
-			$( this.slides[n] ).delay( delay ).animate( animationParams, dTime, function() {
+			$( this.slides[n] ).delay( delay + ( pause * i ) ).animate( animationParams, dTime, function() {
 				if ( forward ) self.atSlide = Number( $( this ).attr( 'flipbookSlide' ) ) + 1;
 				else self.atSlide = Number( $( this ).attr( 'flipbookSlide' ) );
 			} );

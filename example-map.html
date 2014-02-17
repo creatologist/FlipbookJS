@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset='utf-8'>
+		<meta name='viewport' content='width=device-width, initial-scale=1'>
+		
+		<title>FlipbookJS</title>
+		
+		<style>
+			body, html {
+				margin: 0px;
+				padding: 0px;
+				width: 100%;
+				height: 100%;
+			}
+			
+			#container {
+				width: 400px;
+				height: 266px;
+				background-color: black;
+				overflow: hidden;
+				position: relative;
+			}
+			
+				.slide {
+					width: inherit;
+					height: inherit;
+					text-align: center;
+					background-color: black;
+					overflow: hidden;
+					position: absolute;
+					left: 0px;
+					top: 0px;
+				}
+		</style>
+		
+	</head>
+	
+	<body>
+		
+		<div id='container'>
+			<div id='slide20' class='slide'><img src='img/map-21.jpg' /></div>
+			<div id='slide19' class='slide'><img src='img/map-20.jpg' /></div>
+			<div id='slide18' class='slide'><img src='img/map-19.jpg' /></div>
+			<div id='slide17' class='slide'><img src='img/map-18.jpg' /></div>
+			<div id='slide16' class='slide'><img src='img/map-17.jpg' /></div>
+			<div id='slide15' class='slide'><img src='img/map-16.jpg' /></div>
+			<div id='slide14' class='slide'><img src='img/map-15.jpg' /></div>
+			<div id='slide13' class='slide'><img src='img/map-14.jpg' /></div>
+			<div id='slide12' class='slide'><img src='img/map-13.jpg' /></div>
+			<div id='slide11' class='slide'><img src='img/map-12.jpg' /></div>
+			<div id='slide10' class='slide'><img src='img/map-11.jpg' /></div>
+			<div id='slide9' class='slide'><img src='img/map-10.jpg' /></div>
+			<div id='slide8' class='slide'><img src='img/map-9.jpg' /></div>
+			<div id='slide7' class='slide'><img src='img/map-8.jpg' /></div>
+			<div id='slide6' class='slide'><img src='img/map-7.jpg' /></div>
+			<div id='slide5' class='slide'><img src='img/map-6.jpg' /></div>
+			<div id='slide4' class='slide'><img src='img/map-5.jpg' /></div>
+			<div id='slide3' class='slide'><img src='img/map-4.jpg' /></div>
+			<div id='slide2' class='slide'><img src='img/map-3.jpg' /></div>
+			<div id='slide1' class='slide'><img src='img/map-2.jpg' /></div>
+			<div id='slide0' class='slide'><img src='img/map-1.jpg' /></div>
+		</div>
+		
+		<script src='js/jquery-1.9.1.min.js'></script>
+		<script src='js/jquery.easing.1.3.js'></script>
+		<script src='js/flipbook.js'></script>
+		<script>
+			var flipbook = new Flipbook( $( '#container .slide' ) );
+			flipbook.flipTo( 20, {duration: 2000, pause: 500 }, { opacity: 0 } );
+		</script>
+		
+	</body>
+	
+</html>
