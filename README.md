@@ -34,7 +34,7 @@ Flip through slides by animating each slide leading to your target slide.
 
 ### 
 ```javascript
-	// optional onUpdate fires whenever a slide finishes animating 
+	// optional onUpdateFunc fires whenever flipbook finishes animating a slide
 	var flipbook = new Flipbook( slides, function( atSlideNumber, slide, Flipbook ) {...} );
 	
 	flipbook.flipTo( slideNum, totalDuration, animationParams, finishCallback );
