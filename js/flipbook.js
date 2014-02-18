@@ -49,7 +49,7 @@ Flipbook.prototype = {
 		}
 	},
 	
-	flipTo : function( slideNum, duration, animationParams, finishCallback ) {
+	flipTo : function( slideNum, totalDuration, animationParams, finishCallback ) {
 		
 		if ( slideNum < this.atSlide ) slideNum -= 1;
 		
@@ -62,14 +62,25 @@ Flipbook.prototype = {
 		
 		var t,
 			pause = 0;
-			
-		if ( typeof duration == 'number' ) t = duration;
+		
+		var isTotalDuration = true;
+		
+		if ( typeof totalDuration == 'number' ) t = duration;
 		else {
-			t = duration.duration;
-			pause = duration.pause;
+			if ( totalDuration.totalDuration ) t = duration.totalDuration;
+			if ( totalDuration.pause ) pause = duration.pause;
+			if ( totalDuration.duration ) {
+				t = totalDuration.duration;
+				isTotalDuration = false;
+			}
 		}
 		
-		var dTime = t / totalSlides;
+		// figure out time for each slide
+		var dTime;
+			
+		if ( isTotalDuration ) dTime = t / totalSlides;
+		else dTime = t;
+			
 		var delay = 0;
 		
 		var self = this;
@@ -106,7 +117,6 @@ Flipbook.prototype = {
 					if ( self.onUpdate ) self.onUpdate( self.atSlide, self.slides[ self.atSlide ], self );
 				} );
 			}
-			
 			
 			delay += dTime;
 		}
