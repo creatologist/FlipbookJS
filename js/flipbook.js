@@ -21,7 +21,7 @@
 //===============================================================================================
 //----------------------------------------------------------------------------------------------- DO IT
 
-var Flipbook = function( slides ) {
+var Flipbook = function( slides, onUpdate ) {
 	
 	slides = slides.toArray().reverse();
 	
@@ -31,12 +31,23 @@ var Flipbook = function( slides ) {
 	this.slides = slides;	
 	this.totalSlides = slides.length;
 	
+	this.onUpdate;
+	
+	if ( onUpdate ) this.onUpdate = onUpdate;
+	
 	for ( var i = 0, len = this.totalSlides; i < len; i++ ) {
 		$( this.slides[i] ).attr( 'flipbookSlide', i );
 	}
 };
 
 Flipbook.prototype = {
+	
+	reset : function( style ) {
+		this.atSlide = 0;
+		for ( var i = 0, len = this.totalSlides; i < len; i++ ) {
+			$( this.slides[i] ).css( style );
+		}
+	},
 	
 	flipTo : function( slideNum, duration, animationParams, finishCallback ) {
 		
@@ -75,15 +86,24 @@ Flipbook.prototype = {
 			
 			if ( last ) {
 				$( this.slides[n] ).delay( delay + ( pause * i ) ).animate( animationParams, dTime, function() {
-					if ( forward ) self.atSlide = Number( $( this ).attr( 'flipbookSlide' ) ) + 1;
-					else self.atSlide = Number( $( this ).attr( 'flipbookSlide' ) );
+					
+					var slideIndex = Number( $( this ).attr( 'flipbookSlide' ) );
+					
+					if ( forward ) self.atSlide = slideIndex + 1;
+					else self.atSlide = slideIndex;
+					
+					if ( self.onUpdate ) self.onUpdate( self.atSlide, self.slides[ self.atSlide ], self );
 					
 					if ( finishCallback ) finishCallback();
 				} );
 			} else {
 				$( this.slides[n] ).delay( delay + ( pause * i ) ).animate( animationParams, dTime, function() {
-					if ( forward ) self.atSlide = Number( $( this ).attr( 'flipbookSlide' ) ) + 1;
-					else self.atSlide = Number( $( this ).attr( 'flipbookSlide' ) );
+					var slideIndex = Number( $( this ).attr( 'flipbookSlide' ) );
+					
+					if ( forward ) self.atSlide = slideIndex + 1;
+					else self.atSlide = slideIndex;
+					
+					if ( self.onUpdate ) self.onUpdate( self.atSlide, self.slides[ self.atSlide ], self );
 				} );
 			}
 			
