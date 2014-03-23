@@ -2,7 +2,7 @@
 Flip through slides by animating each slide leading to your target slide.
 
 ### Example
-[http://christophermil.es/FlipbookJS](http://christophermil.es/FlipbookJS)
+[http://christophermil.es/github/FlipbookJS](http://christophermil.es/github/FlipbookJS)
 
 ### Example Code
 ```javascript
